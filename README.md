@@ -211,11 +211,12 @@ The script can auto-download genomes from Ensembl, UCSC or NCBI or allows you to
 your own custom genome in .fasta format and .gff.
 
 E.g. to add the X. laevis genome:
-    sudo crisprAddGenome fasta /tmp2/LAEVIS_7.1.repeatMasked.fa --desc 'xenBaseLaevis71|Xenopus laevis|X. laevis|Xenbase V7.1' --gff geneModels.gff3
 
-The four |-split values for the --desc option are: internalDatabaseName, scientificName, commonOrDisplayName, VersionNameOfAssembly
+    sudo crisprAddGenome fasta /tmp2/LAEVIS_7.1.repeatMasked.fa --desc 'xenBaseLaevis71|Xenopus laev.e V7.1' --gff geneModels.gff3
 
-Make sure that internalDatabaseName does not include special characters, spaces etc. as it is used as a directory name.
+The four `|`-split values for the --desc option are: `internalDatabaseName`, `scientificName`, `commonOrDisplayName`, `VersionNameOfAssembly`
+
+Make sure that `internalDatabaseName` does not include special characters, spaces etc. as it is used as a directory name.
 
 # "I am running many thousands of guides and it is very slow"
 
