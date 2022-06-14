@@ -63,6 +63,11 @@ Install required R libraries for the WangSVM efficiency score:
     sudo Rscript -e 'install.packages(c("e1071"),  repos="http://cran.rstudio.com/")'
     sudo Rscript -e 'source("https://bioconductor.org/biocLite.R"); biocLite(c("limma"));'
 
+
+**Anaconda installation:**
+
+    conda env create -f crispor.yml
+
 The R packages have not changed in many years. The version should really not matter at all. In principle,
 you can remove the wang score from crispor.py in the global variable where the scores are defined 
 and not worry about R anymore. I don't think that as of 2020 anyone is still using this score 
