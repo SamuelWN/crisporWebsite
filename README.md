@@ -61,8 +61,7 @@ not important.
 Install required R libraries for the WangSVM efficiency score:
    
     sudo Rscript -e 'install.packages(c("e1071"),  repos="http://cran.rstudio.com/")'
-    sudo Rscript -e 'source("https://bioconductor.org/biocLite.R"); biocLite(c("limma"));'
-
+    sudo Rscript -e 'if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager"); BiocManager::install(); BiocManager::install("limma")'
 
 **Anaconda installation:**
 
