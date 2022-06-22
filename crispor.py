@@ -4387,48 +4387,25 @@ def saveOutcomeData(batchId, data):
     """ save outcome data of batch. data is a dictionary with key = score name """
     batchBase = join(batchDir, batchId)
     dbFname = batchBase
-    # some distributions don't include the dbm module anymore
-    try:
-        import dbm
-        dbMod = dbm
-    except:
-        import gdbm
-        dbMod = gdbm
 
-    db = dbMod.open(dbFname, "c")
+    import h5py
 
-    #conn = sqlite3.connect(dbFname, "w")
-    #c = conn.cursor()
-    #c.execute('''CREATE TABLE outcomes (id text PRIMARY KEY, data blob))''' % scoreName)
-    #c.commit()
-
-    for scoreName, data in data.iteritems():
-        #c.execute("INSERT INTO outcomes values (?, ?)", (scoreName, gzipStr(json.dumps(data))))
-        db[scoreName] = zlib.compress(json.dumps(data))
-
-    db.close()
-
-    #c.commit()
+    with h5py.File(dbFname+".h5py", "a") as f:
+        store = f.create_group('Base_Group')
+        db = store.create_dataset("OutcomeData", data=json.dumps(data))
 
 def readOutcomeData(batchId, scoreName):
     """ open outcome data of batch, key is score name """
     batchBase = join(batchDir, batchId)
-    #conn = sqlite3.connect(dbFname, "r")
-    #c = conn.cursor()
-    #binData = c.execute("SELECT data FROM outcomes where id=?", scoreName)
-    try:
-        import dbm
-        db = dbm.open(batchBase, "r") # dbm always adds .db to the file name
-    except:
-        # old batches on crispor.org are still using gdbm
-        dbFname = batchBase+".gdbm"
-        import gdbm
-        db = gdbm.open(dbFname, "r")
+    dbFname = batchBase+".h5py"
 
-    dbObj = db[scoreName]
-    jsonStr = zlib.decompress(dbObj)
-    data = json.loads(jsonStr)
-    db.close()
+    import h5py
+
+    with h5py.File(dbFname, 'r') as db:
+        dbObj = db[scoreName]
+        jsonStr = zlib.decompress(dbObj).toString()
+        data = json.loads(jsonStr)
+
     return data
 
 def findAllPams(seq, pam):
